@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>8</title>
+</head>
+<body>
+    <p>打地鼠：点击开始后点击“鼠”字，点击到表格内其他位置游戏结束</p>
+    <button onclick="begin()">开始</button>
+    <div id="div">
+
+    </div>
+    <script type="text/javascript">
+    var x, y;
+    var grade = 0,time = 0;
+    var setIn;
+    var div = document.getElementById("div");
+    function dadishu(that){
+        if(that.innerHTML == "鼠"){
+            grade ++;
+            buildtable()
+        }
+        else {
+            div.innerHTML = "游戏结束<br/>";
+            div.innerHTML += "你的得分为" + grade + "<br/>";
+            div.innerHTML += "您的游戏时间为" + time + "秒";
+
+            grade = 0;
+            clearInterval(setIn);
+            time = 0;
+        }
+    }
+    function buildtable(){
+        div.innerHTML = "";
+        var table = document.createElement("table");
+        table.setAttribute("cellSpacing", "0");
+        table.setAttribute("border", "1");
+        div.appendChild(table);
+        x = Math.floor(Math.random() * 5);
+        y = Math.floor(Math.random() * 5);
+
+        for(var i = 0; i < 5; i ++){
+            var tr = document.createElement("tr");
+            table.appendChild(tr);
+            for(var j = 0; j < 5; j ++){
+                var td = document.createElement("td");
+                if(i != x || j != y){
+                    td.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;";
+                }
+                else {
+                    td.innerHTML = "鼠"
+                }
+                tr.appendChild(td);
+                td.setAttribute('onclick', 'dadishu(this, x, y)');
+            }
+        }
+    }
+    function begin(){
+        buildtable()
+        setIn = setInterval("time ++;", 1000);
+    }
+    </script>
+</body>
+</html>
